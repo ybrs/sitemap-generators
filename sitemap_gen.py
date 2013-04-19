@@ -1208,6 +1208,7 @@ class InputDirectory:
       try:
         if isdir:
 	  if HasReadPermissions(path):
+            output.Log(">>>>>>>>> %s %s " % (str(path), len(os.listdir(path))), level=1 )
             if remove_empty_directories == 'true' and \
 	       len(os.listdir(path)) == 0:
               output.Log('IGNORED empty directory %s' % str(path), level=1)
@@ -1222,8 +1223,9 @@ class InputDirectory:
         pass
       except ValueError:
         pass
- 
-      consumer(url, False)
+      
+      if not isdir: 
+        consumer(url, False)
     #end def PerFile
 
     def PerDirectory(ignore, dirpath, namelist):
